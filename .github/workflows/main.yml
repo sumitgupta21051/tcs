@@ -1,0 +1,20 @@
+name: SGD Test
+
+on:
+  workflow_dispatch:   # manual run, equivalent to "trigger: none" + manual
+
+jobs:
+  test-sgd:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # equivalent to fetchDepth: 0
+
+      - name: Install & verify sgd
+        run: |
+          npm install --global @salesforce/cli
+          sf version
+          echo y | sf plugins install sfdx-git-delta
+          sf sgd --help
